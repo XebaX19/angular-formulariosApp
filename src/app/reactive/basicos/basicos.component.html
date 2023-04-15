@@ -1,0 +1,85 @@
+<h2>Reactive: <small>Básicos</small></h2>
+<hr>
+
+<!-- La idea de los formularios por Template es que se maneje casi toda la lógica del formulario del lado del HTML
+En cambio, en los formularios Reactivos, el HTML es bien simple y se maneja la lógica del lado de Typescript  -->
+
+<div class="row">
+    <div class="col">
+        <form (ngSubmit)="guardar()" autocomplete="off" [formGroup]="miFormulario">
+            <!-- Campo "producto" -->
+            <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label">Productos</label>
+                <div class="col-sm-9">
+                    <input type="text"
+                            class="form-control"
+                            formControlName="nombre"
+                            placeholder="Nombre del producto">
+                    <span class="form-text text-danger"
+                          *ngIf="esInvalido('nombre')">
+                        Debe ser de 3 letras como mínimo...
+                    </span>
+                </div>
+            </div>
+
+            <!-- Campo "precio" -->
+            <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label">Precio</label>
+                <div class="col-sm-9">
+                    <input type="number"
+                            class="form-control"
+                            formControlName="precio"
+                            placeholder="Precio del producto">
+                    <span class="form-text text-danger"
+                          *ngIf="esInvalido('precio')">
+                        El precio debe ser igual o mayor que 0...
+                    </span>
+                </div>
+            </div>
+
+            <!-- Campo "existencias" -->
+            <!-- customMin: directiva personalizada. Ver directives/custom-min.directive.ts -->
+            <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label">Existencias</label>
+                <div class="col-sm-9">
+                    <input type="number"
+                            class="form-control"
+                            formControlName="existencias"
+                            placeholder="Existencias del producto">
+                    <span class="form-text text-danger"
+                          *ngIf="esInvalido('existencias')">
+                        Las existencias deben ser igual o mayor que 0...
+                    </span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <button type="submit"
+                            class="btn btn-primary float-end">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <span>Valid (para saber si el form cumple con los campos requeridos y demás validaciones)</span>
+        <pre>{{ miFormulario.valid }}</pre>
+
+        <span>Pristine (si no se modificaron los valores con que se presentó inicialmente el form estará en true)</span>
+        <pre>{{ miFormulario.pristine }}</pre>
+
+        <span>Touched (si se tocó el formulario)</span>
+        <pre>{{ miFormulario.touched }}</pre>
+
+        <span>Value (valores referenciados del form)</span>
+        <pre>{{ miFormulario.value | json }}</pre>
+
+        <span>Precio</span>
+        <pre>{{ miFormulario.controls['precio'].errors | json }}</pre>
+    </div>
+</div>
